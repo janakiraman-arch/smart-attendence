@@ -1,0 +1,8 @@
+opencv-python
+mediapipe
+numpy
+scipy
+Flask
+face_recognition
+geopy
+requests

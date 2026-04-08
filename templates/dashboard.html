@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard - Smart Attendance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="bg-mesh"></div>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-icon">SA</div>
+        <div>
+          <p class="eyebrow">Smart Attendance</p>
+          <p class="brand-title">Ops Dashboard</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a href="/" class="chip ghost">&larr; Capture view</a>
+        <a href="/api/export" class="chip primary">Download CSV</a>
+      </div>
+    </div>
+
+    <header class="hero slim">
+      <div class="hero-copy">
+        <p class="eyebrow">Analytics overview</p>
+        <h1>Attendance dashboard</h1>
+        <p class="lede">Live numbers for today with the 50 most recent entries, including location trails.</p>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric-card">
+          <p class="metric-label">Total enrolled</p>
+          <div class="metric-value">{{ total_people }}</div>
+          <p class="metric-sub">Registered faces</p>
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">Today</p>
+          <div class="metric-value">{{ today_attendance }}</div>
+          <p class="metric-sub">Check-ins recorded</p>
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">System</p>
+          <div class="metric-value ok">Online</div>
+          <p class="metric-sub">Serving requests</p>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="card table-card full">
+        <div class="card-head">
+          <div>
+            <p class="label">Recent activity</p>
+            <p class="sub">Latest 50 attendance records</p>
+          </div>
+          <div class="actions">
+            <a href="/api/export" class="chip ghost">Export</a>
+          </div>
+        </div>
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Check-in</th>
+                <th>Check-out</th>
+                <th>Date</th>
+                <th>Location</th>
+                <th>Geo</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for record in recent_records %}
+              <tr>
+                <td class="cell-strong">{{ record[0] }}</td>
+                <td>{{ record[1].split('T')[1] }}</td>
+                <td>{{ record[4].split('T')[1] if record[4] else '--' }}</td>
+                <td>{{ record[2] }}</td>
+                <td>{{ record[3] or 'Unknown' }}</td>
+                <td>
+                  {% if record[5] and record[6] %}
+                    {{ '%.4f'|format(record[5]) }}, {{ '%.4f'|format(record[6]) }}
+                  {% else %}
+                    —
+                  {% endif %}
+                </td>
+                <td>
+                  <span class="badge {% if record[4] %}danger{% else %}success{% endif %}">
+                    {{ 'Completed' if record[4] else 'Present' }}
+                  </span>
+                </td>
+              </tr>
+              {% else %}
+              <tr>
+                <td colspan="7" class="empty-row">No records found.</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

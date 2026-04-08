@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Attendance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="bg-mesh"></div>
+  <div class="page">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-icon">SA</div>
+        <div>
+          <p class="eyebrow">Smart Attendance</p>
+          <p class="brand-title">Vision Console</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <label class="chip input">
+          <span class="label-text">Station</span>
+          <input type="text" id="stationName" placeholder="Main Entrance" value="Main Entrance">
+        </label>
+        <label class="chip toggle">
+          <input type="checkbox" id="locationToggle" checked>
+          <span class="switch"><span class="handle"></span></span>
+          <span class="label-text">Precise location</span>
+        </label>
+        <div class="chip ghost">Status <span id="status" class="dot dot-live">idle</span></div>
+        <a href="/dashboard" class="chip primary">Dashboard</a>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Secure • Automated • Precise</p>
+        <h1>Clean, operator-friendly check-ins.</h1>
+        <p class="lede">Face capture, geo-locking, and native prompts in one view so kiosks stay simple while audit trails stay complete.</p>
+        <div class="hero-badges">
+          <span class="pill badge">Hands-free</span>
+          <span class="pill badge">Geo anchored</span>
+          <span class="pill badge">Biometric confirm</span>
+        </div>
+      </div>
+      <div class="hero-metrics">
+        <div class="metric-card">
+          <p class="metric-label">Median capture</p>
+          <div class="metric-value">1.2s</div>
+          <p class="metric-sub">Frame to record</p>
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">Location</p>
+          <div class="metric-value">GPS + IP</div>
+          <p class="metric-sub">Fallback if denied</p>
+        </div>
+        <div class="metric-card">
+          <p class="metric-label">Security</p>
+          <div class="metric-value">2-step</div>
+          <p class="metric-sub">Face + device unlock</p>
+        </div>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="card video-card">
+        <div class="card-head">
+          <div>
+            <p class="label">Live console</p>
+            <p class="sub">Center the face, keep lighting even, and wait for the ring to settle.</p>
+          </div>
+          <div class="actions">
+            <button id="enrollBtn" class="ghost">Enroll face</button>
+            <button id="checkBtn" class="primary">Check in</button>
+            <button id="checkoutBtn" class="outline">Check out</button>
+          </div>
+        </div>
+
+        <div class="video-shell">
+          <div class="video-wrap">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas" hidden></canvas>
+            <div id="scanOverlay" class="scan-overlay">
+              <div class="biometric-hud">
+                <div class="circle-scan"></div>
+                <div class="corner-info top-left">SCANNING...</div>
+                <div class="corner-info top-right">BIOMETRIC 0x8A</div>
+                <div class="corner-info bottom-left">FACE-MATCH</div>
+                <div class="corner-info bottom-right">SECURE-ID-SYNC</div>
+              </div>
+            </div>
+          </div>
+          <div class="live-hint">
+            <p class="hint">Allow camera + location when prompted.</p>
+            <div id="liveLocation" class="live-location">
+              <span class="pill-label">Location</span>
+              <span class="loc-text">Disabled</span>
+              <span class="loc-accuracy" aria-label="location accuracy"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card table-card">
+        <div class="card-head">
+          <div>
+            <p class="label">Today</p>
+            <p class="sub">Latest check-ins with location trail</p>
+          </div>
+          <button id="refreshBtn" class="ghost">Refresh</button>
+        </div>
+        <div class="table-container">
+          <table id="attendanceTable">
+            <thead>
+              <tr><th>Name</th><th>Check-in</th><th>Check-out</th><th>Location</th><th>Geo</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <p class="hint">One entry per person per day.</p>
+      </section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" aria-live="polite"></div>
+  <script src="/static/main.js"></script>
+</body>
+</html>
