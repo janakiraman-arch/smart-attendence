@@ -6,20 +6,19 @@
 
 ## 📌 Table of Contents
 
-- [Project Overview](#project-overview)
-- [Features](#features)
-- [System Architecture](#system-architecture)
-- [Tech Stack](#tech-stack)
-- [Project Structure](#project-structure)
-- [Prerequisites](#prerequisites)
-- [Installation & Setup](#installation--setup)
-- [Usage](#usage)
-- [Database Schema](#database-schema)
-- [Screenshots](#screenshots)
-- [Future Enhancements](#future-enhancements)
-- [Contributors](#contributors)
-- [License](#license)
-
+- Project Overview
+- Features
+- System Architecture
+- Tech Stack
+- Project Structure
+- Prerequisites
+- Installation & Setup
+- Usage
+- Database Schema
+- Screenshots
+- Future Enhancements
+- Contributors
+- License
 ---
 
 ## 📖 Project Overview
